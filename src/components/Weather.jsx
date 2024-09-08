@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Typography, Grid, Card, CardContent } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { TextField, Typography, Box, Card, CardContent } from '@mui/material';
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(2),
+  right: theme.spacing(2),
+  zIndex: 1000,
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  maxWidth: 300,
+  pointerEvents: 'auto',
+}));
 
 const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -29,39 +40,26 @@ const WeatherApp = () => {
   };
 
   return (
-    <Grid container spacing={3} justify="center">
-      <Grid item xs={12}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Weather App
-        </Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          label="Enter city name"
-          variant="outlined"
-          fullWidth
-          value={city}
-          onChange={handleCityChange}
-        />
-      </Grid>
-      {weatherData && (
-        <Grid item xs={12}>
-          <Card>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+      <Box sx={{ width: '100%', maxWidth: 600 }}>
+          <StyledCard>
             <CardContent>
+            <Typography variant="h4" align="center" gutterBottom>
+              Current Weather
+              </Typography>
               <Typography variant="h5" component="h2">
-                {weatherData.name}
+                {weatherData?.name}
               </Typography>
               <Typography variant="body1" component="p">
-                Temperature: {weatherData.main.temp}°C
+                Temperature: {weatherData?.main.temp}°C
               </Typography>
               <Typography variant="body1" component="p">
-                Weather: {weatherData.weather[0].main}
+                Weather: {weatherData?.weather[0].main}
               </Typography>
             </CardContent>
-          </Card>
-        </Grid>
-      )}
-    </Grid>
+          </StyledCard>
+      </Box>
+    </Box>
   );
 };
 
